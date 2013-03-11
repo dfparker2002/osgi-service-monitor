@@ -8,6 +8,7 @@ import com.citytechinc.monitoring.domain.ServiceMonitorResult;
 import com.citytechinc.monitoring.domain.SubscriptionDefinition;
 import com.google.common.base.Function;
 import com.google.common.base.Stopwatch;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.util.concurrent.FutureCallback;
@@ -207,13 +208,13 @@ public final class ServiceMonitorManagerImpl implements ServiceMonitorManager {
     @Override
     public List<ServiceMonitorResult> getAllMonitorResults() {
 
-        final List<ServiceMonitorResult> compiledResults = Lists.newArrayList();
+        final ImmutableList.Builder<ServiceMonitorResult> monitorResultBuilder = new ImmutableList.Builder<ServiceMonitorResult>();
 
         for (final ServiceMonitorRecordHolder serviceMonitorRecordHolder : serviceMonitors.values()) {
-            compiledResults.addAll(serviceMonitorRecordHolder.getResults());
+            monitorResultBuilder.addAll(serviceMonitorRecordHolder.getResults());
         }
 
-        return compiledResults;
+        return monitorResultBuilder.build();
     }
 
     @Override
@@ -235,18 +236,18 @@ public final class ServiceMonitorManagerImpl implements ServiceMonitorManager {
     @Override
     public List<String> getAlarmedMonitors() {
 
-        final List<String> alarmedMonitorClassNames = Lists.newArrayList();
+        final ImmutableList.Builder<String> alarmedMonitorsBuilder = new ImmutableList.Builder<String>();
 
         for (final ServiceMonitor serviceMonitor : serviceMonitors.keySet()) {
 
             final ServiceMonitorRecordHolder recordHolder = serviceMonitors.get(serviceMonitor);
 
             if (recordHolder.isInAlarmState()) {
-                alarmedMonitorClassNames.add(serviceMonitor.getClass().getName());
+                alarmedMonitorsBuilder.add(serviceMonitor.getClass().getName());
             }
         }
 
-        return alarmedMonitorClassNames;
+        return alarmedMonitorsBuilder.build();
     }
 
     @Override
