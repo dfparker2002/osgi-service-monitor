@@ -3,6 +3,7 @@ package com.citytechinc.monitoring.sample;
 import com.citytechinc.monitoring.constants.Constants;
 import com.citytechinc.monitoring.domain.ServiceMonitorResult;
 import com.citytechinc.monitoring.domain.SubscriptionDefinition;
+import com.citytechinc.monitoring.services.NotificationDeliveryAgent;
 import org.apache.felix.scr.annotations.Component;
 import org.apache.felix.scr.annotations.Properties;
 import org.apache.felix.scr.annotations.Property;
@@ -19,9 +20,9 @@ import org.slf4j.LoggerFactory;
 @Service
 @Properties({
         @Property(name = org.osgi.framework.Constants.SERVICE_VENDOR, value = Constants.CITYTECH_SERVICE_VENDOR_NAME) })
-public final class NotificationDeliveryAgent implements com.citytechinc.monitoring.services.NotificationDeliveryAgent {
+public final class SampleNotificationDeliveryAgent implements NotificationDeliveryAgent {
 
-    private static final Logger LOG = LoggerFactory.getLogger(NotificationDeliveryAgent.class);
+    private static final Logger LOG = LoggerFactory.getLogger(SampleNotificationDeliveryAgent.class);
 
     @Override
     public void notify(final ServiceMonitorResult serviceMonitorResult) {
