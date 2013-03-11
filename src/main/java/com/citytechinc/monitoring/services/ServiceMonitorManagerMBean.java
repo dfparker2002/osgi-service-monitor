@@ -18,13 +18,13 @@ public interface ServiceMonitorManagerMBean {
      *
      * @return
      */
-    public List<String> listMonitors();
+    public List<String> getMonitors();
 
     /**
      *
      * @return
      */
-    public List<String> listNotificationDeliveryAgents();
+    public List<String> getNotificationDeliveryAgents();
 
     /**
      *

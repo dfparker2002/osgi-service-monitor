@@ -26,12 +26,12 @@ public final class ServiceMonitorManagerMBeanImpl implements ServiceMonitorManag
     }
 
     @Override
-    public List<String> listMonitors() {
+    public List<String> getMonitors() {
         return serviceMonitorManager.listMonitors();
     }
 
     @Override
-    public List<String> listNotificationDeliveryAgents() {
+    public List<String> getNotificationDeliveryAgents() {
         return serviceMonitorManager.listNotificationDeliveryAgents();
     }
 
