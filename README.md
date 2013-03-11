@@ -28,7 +28,7 @@ Tracked per ServiceMonitor, after the max sequential unsuccesful polls is reache
 
 Presently, the only way to clear the alarm is to invoke resetAllAlarms() or resetAlarm(String monitorName) found on the ServiceMonitorManagerMBean.
 
-For extensibility/expansion purposes, the data received by the ServiceMonitorManager is also available, as JSON, via calls to a few servlets:
+For extensibility/expansion purposes, the data received by the ServiceMonitorManager is also available, as JSON, via GET calls to a few servlets:
 
 1. /bin/citytechinc/monitoring/listNotificationDeliveryAgents
 2. /bin/citytechinc/monitoring/listServiceMonitorResults
