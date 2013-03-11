@@ -34,6 +34,10 @@ For extensibility/expansion purposes, the data received by the ServiceMonitorMan
 2. /bin/citytechinc/monitoring/listServiceMonitorResults
 3. /bin/citytechinc/monitoring/listServiceMonitors
 
+---
+
+See the samples in com.citytechinc.monitoring.sample
+
 ## Installation
 
 ...
