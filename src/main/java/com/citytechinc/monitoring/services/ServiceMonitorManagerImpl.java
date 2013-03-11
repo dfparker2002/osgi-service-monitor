@@ -49,16 +49,10 @@ import java.util.concurrent.TimeUnit;
         @Property(name = org.osgi.framework.Constants.SERVICE_VENDOR, value = Constants.CITYTECH_SERVICE_VENDOR_NAME) })
 public final class ServiceMonitorManagerImpl implements ServiceMonitorManager {
 
-    private static final Integer DEFAULT_QUEUE_SIZE = 50;
-    private static final Integer DEFAULT_THREAD_POOL_SIZE = 10;
     private static final Logger LOG = LoggerFactory.getLogger(ServiceMonitorManagerImpl.class);
 
-    private ListeningExecutorService monitorExecutorService = MoreExecutors.listeningDecorator(Executors.newFixedThreadPool(DEFAULT_THREAD_POOL_SIZE));
-    private ExecutorService notificationExecutorService = MoreExecutors.listeningDecorator(Executors.newFixedThreadPool(DEFAULT_THREAD_POOL_SIZE));
-
-    @Property(label = "History Length", value = Constants.SERVICE_MONITOR_MANAGER_DEFAULT_HISTORY_LENGTH, description = "The length of history in memory for each monitor.")
-    private static final String HISTORY_LENGTH_PROPERTY = "historyLength";
-    private Integer historyLength;
+    private ListeningExecutorService monitorExecutorService = MoreExecutors.listeningDecorator(Executors.newFixedThreadPool(Constants.SERVICE_MONITOR_MANAGER_DEFAULT_THREAD_POOL_SIZE));
+    private ExecutorService notificationExecutorService = MoreExecutors.listeningDecorator(Executors.newFixedThreadPool(Constants.SERVICE_MONITOR_MANAGER_DEFAULT_THREAD_POOL_SIZE));
 
     @Property(label = "Failures to trigger notification", value = Constants.SERVICE_MONITOR_MANAGER_DEFAULT_SEQUENTIAL_FAILURES_BEFORE_NOTIFICATION, description = "The number of sequential failures, tracked by individually by each ServiceMonitor, before a notification is triggered.")
     private static final String SEQUENTIAL_FAILURES_BEFORE_NOTIFICATION_PROPERTY = "sequentialFailuresBeforeNotification";
@@ -84,7 +78,7 @@ public final class ServiceMonitorManagerImpl implements ServiceMonitorManager {
     }
 
     protected void bindServiceMonitor(final ServiceMonitor serviceMonitor) {
-        serviceMonitors.put(serviceMonitor, new ServiceMonitorRecordHolder(DEFAULT_QUEUE_SIZE));
+        serviceMonitors.put(serviceMonitor, new ServiceMonitorRecordHolder(Constants.SERVICE_MONITOR_MANAGER_DEFAULT_QUEUE_SIZE));
     }
 
     protected void unbindServiceMonitor(final ServiceMonitor serviceMonitor) {
@@ -202,12 +196,12 @@ public final class ServiceMonitorManagerImpl implements ServiceMonitorManager {
 
     @Override
     public List<String> listMonitors() {
-        return Lists.transform(Lists.newArrayList(serviceMonitors.keySet()), REDUCE_SERVICE_MONITOR_TO_CLASS_NAME);
+        return Lists.transform(Lists.newArrayList(serviceMonitors.keySet()), REDUCE_LIST_OF_OBJECTS_TO_LIST_OF_CLASS_NAMES);
     }
 
     @Override
     public List<String> listNotificationDeliveryAgents() {
-        return Lists.transform(Lists.newArrayList(notificationDeliveryAgents.keySet()), REDUCE_NOTIFICATION_DELIVERY_AGENT_TO_CLASS_NAME);
+        return Lists.transform(Lists.newArrayList(notificationDeliveryAgents.keySet()), REDUCE_LIST_OF_OBJECTS_TO_LIST_OF_CLASS_NAMES);
     }
 
     @Override
@@ -278,19 +272,11 @@ public final class ServiceMonitorManagerImpl implements ServiceMonitorManager {
         }
     }
 
-    private static final Function<NotificationDeliveryAgent, String> REDUCE_NOTIFICATION_DELIVERY_AGENT_TO_CLASS_NAME = new Function<NotificationDeliveryAgent, String>() {
+    private static final Function<Object, String> REDUCE_LIST_OF_OBJECTS_TO_LIST_OF_CLASS_NAMES = new Function<Object, String>() {
 
         @Override
-        public String apply(final NotificationDeliveryAgent notificationDeliveryAgent) {
-            return notificationDeliveryAgent.getClass().getName();
-        }
-    };
-
-    private static final Function<ServiceMonitor, String> REDUCE_SERVICE_MONITOR_TO_CLASS_NAME = new Function<ServiceMonitor, String>() {
-
-        @Override
-        public String apply(final ServiceMonitor serviceMonitor) {
-            return serviceMonitor.getClass().getName();
+        public String apply(final Object object) {
+            return object.getClass().getName();
         }
     };
 }

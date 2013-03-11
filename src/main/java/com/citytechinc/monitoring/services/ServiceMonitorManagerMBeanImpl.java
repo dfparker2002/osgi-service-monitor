@@ -13,7 +13,7 @@ import java.util.List;
  *
  */
 @Component(immediate = true)
-@Property(name = "jmx.objectname", value = "com.citytechinc.monitoring.services:type=Service Monitor")
+@Property(name = "jmx.objectname", value = "com.citytechinc.monitoring.services:type=OSGi Service Monitor")
 @Service
 public final class ServiceMonitorManagerMBeanImpl implements ServiceMonitorManagerMBean {
 

@@ -19,8 +19,9 @@ public final class Constants {
     public static final String SERVICE_MONITOR_POLL_JOB_KEY = "ct-srvmonjob";
     public static final String SERVICE_MONITOR_POLL_JOB_DEFAULT_JOB_SCHEDULE = "0 0 * * * ?";
 
-    public static final String SERVICE_MONITOR_MANAGER_DEFAULT_HISTORY_LENGTH = "1000";
     public static final String SERVICE_MONITOR_MANAGER_DEFAULT_SEQUENTIAL_FAILURES_BEFORE_NOTIFICATION = "3";
+    public static final Integer SERVICE_MONITOR_MANAGER_DEFAULT_QUEUE_SIZE = 50;
+    public static final Integer SERVICE_MONITOR_MANAGER_DEFAULT_THREAD_POOL_SIZE = 10;
 
     public static final String ABSTRACT_JSON_RESPONSE_SERVLET_CONTENT_TYPE = "application/json";
     public static final String ABSTRACT_JSON_RESPONSE_SERVLET_CHARACTER_ENCODING = "utf8";
