@@ -13,9 +13,9 @@ import org.apache.sling.api.SlingHttpServletResponse;
  *
  */
 @SlingServlet(
-        paths = Constants.LIST_AVAILABLE_SERVICE_MONITORS,
+        paths = Constants.LIST_SERVICE_MONITORS,
         methods = "GET")
-public final class ListAvailableServiceMonitors extends AbstractJSONResponseServlet {
+public final class ListServiceMonitors extends AbstractJSONResponseServlet {
 
     @Reference
     ServiceMonitorManager serviceMonitorManager;

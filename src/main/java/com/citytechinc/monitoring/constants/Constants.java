@@ -28,7 +28,8 @@ public final class Constants {
     public static final String ABSTRACT_JSON_RESPONSE_SERVLET_DEFAULT_DATE_FORMAT = "MM/dd/yyyy hh:mm aaa z";
 
     private static final String SERVLET_ROOT_PATH = "/bin/citytechinc/monitoring";
-    public static final String LIST_AVAILABLE_SERVICE_MONITORS = SERVLET_ROOT_PATH + "/listAvailableServiceMonitors";
+    public static final String LIST_NOTIFICATION_DELIVERY_AGENTS = SERVLET_ROOT_PATH + "/listNotificationDeliveryAgents";
     public static final String LIST_SERVICE_MONITOR_RESULTS = SERVLET_ROOT_PATH + "/listServiceMonitorResults";
+    public static final String LIST_SERVICE_MONITORS = SERVLET_ROOT_PATH + "/listServiceMonitors";
 
 }
