@@ -4,7 +4,7 @@
 
 ## Introduction
 
-The OSGi Service Monitor is a bundle aimed at aiding engineers to keep track of the (likely external) services they depend on. The OSGi Service Monitor provides:
+The OSGi Service Monitor is a bundle aimed at aiding engineers in the tracking of (likely external) services they depend on. The OSGi Service Monitor provides:
 
 1. A service signature for monitors -- responsible for polling
 2. A service signature for delivery agents -- responsible for responding to sequential, unsuccessful poll attempts
@@ -16,7 +16,7 @@ The OSGi Service Monitor is a bundle aimed at aiding engineers to keep track of 
 
 The ServiceMonitorManager automatically tracks the monitors and delivery agents as they come on and offline. A NotificationDeliveryAgent can choose to receive unsuccessful event notifications for all registered ServiceMonitors or a list of defined monitors.
 
-Registration of (0-to-many) ServiceMonitors is automatic, requring a simple implementation of:
+Registration of (0-to-many) `ServiceMonitor`s is automatic, requring a simple implementation of:
 
 ```
 package com.citytechinc.monitoring.services;
@@ -29,7 +29,7 @@ public interface ServiceMonitor {
 }
 ```
 
-Registration of (0-to-many) NotificationDeliveryAgents is also automatic, requiring an implementation of:
+Registration of (0-to-many) `NotificationDeliveryAgent`s is also automatic, requiring an implementation of:
 
 ```
 package com.citytechinc.monitoring.services;
@@ -43,15 +43,15 @@ public interface NotificationDeliveryAgent {
     public SubscriptionDefinition getSubscriptionDefinition();
 }
 ```
-Tracked per ServiceMonitor, the ServiceMonitorManager stores ServiceMonitorResponses from the monitors it polls. Most importantly, the manager stores details such as:
+Tracked per `ServiceMonitor`, the `ServiceMonitorManager` stores `ServiceMonitorResponses` from the monitors it polls. Most importantly, the manager stores details such as:
 
 1. The time the ServiceMonitor began its poll
 2. The process time for the ServiceMonitor in milliseconds
 3. The exception stack trace if an exception occurred
 
-After the max sequential unsuccesful polls is reached for a given ServiceMonitor, the relevant NotificationDeliveryAgents are notified. Polling for ServiceMonitors which are "in a state of alarm" is suspended until the alarm has been cleared.
+After the max sequential unsuccesful polls is reached for a given `ServiceMonitor`, the relevant `NotificationDeliveryAgent`s are notified. Polling for `ServiceMonitor`s which are "in a state of alarm" is suspended until the alarm has been cleared.
 
-Presently, to clear an alarm an engineer must invoke the ServiceMonitorManager.resetAllAlarms() or ServiceMonitorManager.resetAlarm(String monitorName). For ease, these signatures are also available on the provided JMX MBean. The MBean also provides a quick birdseye view of the
+Presently, to clear an alarm an engineer must invoke the `ServiceMonitorManager.resetAllAlarms()` or `ServiceMonitorManager.resetAlarm(String monitorName)`. For ease, these signatures are also available on the provided JMX MBean. The MBean also provides a quick birdseye view of the
 
 1. List of monitors
 2. List of delivery agents
@@ -59,17 +59,17 @@ Presently, to clear an alarm an engineer must invoke the ServiceMonitorManager.r
 
 For extensibility/expansion purposes, the data received by the ServiceMonitorManager is also available, as JSON, via GET calls to a few servlets:
 
-1. /bin/citytechinc/monitoring/listNotificationDeliveryAgents
-2. /bin/citytechinc/monitoring/listServiceMonitorResults
-3. /bin/citytechinc/monitoring/listServiceMonitors
+1. `/bin/citytechinc/monitoring/listNotificationDeliveryAgents`
+2. `/bin/citytechinc/monitoring/listServiceMonitorResults`
+3. `/bin/citytechinc/monitoring/listServiceMonitors`
 
 ---
 
 ## Sample Usage
 
-There are three provided sample services - one NotificationDeliveryAgent and two ServiceMonitors.
+There are three provided sample services - one `NotificationDeliveryAgent` and two `ServiceMonitor`s.
 
-The [SampleNotificationDeliveryAgent] [1] simply logs when it is invoked. The two ServiceMonitor implementations, [SuccessfulServiceMonitor] [3] and [SometimesSuccessfulServiceMonitor] [2], return successful poll responses and random success/unexpected responses, respectively.
+The [SampleNotificationDeliveryAgent] [1] simply logs when it is invoked. The two `ServiceMonitor` implementations, [SuccessfulServiceMonitor] [3] and [SometimesSuccessfulServiceMonitor] [2], return successful poll responses and random success/unexpected responses, respectively.
 
   [1]: https://github.com/Citytechinc/osgi-service-monitor/blob/master/src/main/java/com/citytechinc/monitoring/sample/SampleNotificationDeliveryAgent.java          "SampleNotificationDeliveryAgent.java"
   [2]: https://github.com/Citytechinc/osgi-service-monitor/blob/master/src/main/java/com/citytechinc/monitoring/sample/SometimesSuccessfulServiceMonitor.java        "SometimesSuccessfulServiceMonitor.java"
