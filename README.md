@@ -9,7 +9,7 @@ The Felix OSGi Service Monitor is a bundle aimed at aiding engineers in the trac
 1. A service signature for monitors -- responsible for polling
 2. A service signature for delivery agents -- responsible for responding to sequential, unsuccessful poll attempts
 3. A scheduled job for across-the-board polling
-4. A central service tasked with keeping track of monitors and delivery agents as they come and go, in addition to poll responses.
+4. A central service tasked with keeping track of monitors and delivery agents as they come and go, in addition to poll responses
 5. A set of servlets rendering data as JSON as well as a JMX bean
 
 ## Sample Business Use Case
@@ -57,7 +57,7 @@ Tracked per `ServiceMonitor`, the `ServiceMonitorManager` stores `ServiceMonitor
 
 After the max sequential unsuccesful polls is reached for a given `ServiceMonitor`, the relevant `NotificationDeliveryAgent`s are notified. Polling for `ServiceMonitor` which are "in a state of alarm" is suspended until the alarm has been cleared.
 
-Presently, to clear an alarm an engineer must invoke the `ServiceMonitorManager.resetAllAlarms()` or `ServiceMonitorManager.resetAlarm(String monitorName)`. For ease, these signatures are also available on the provided JMX MBean. The MBean also provides a quick birdseye view of the
+Presently, to clear an alarm an engineer must invoke the `ServiceMonitorManager.resetAllAlarms()` or `ServiceMonitorManager.resetAlarm(String monitorName)`. For ease, these signatures are also available on the provided JMX MBean. The MBean also provides a quick birdseye view of the:
 
 1. List of monitors
 2. List of delivery agents
