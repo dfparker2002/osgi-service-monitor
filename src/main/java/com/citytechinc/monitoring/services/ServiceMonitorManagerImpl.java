@@ -157,8 +157,11 @@ public final class ServiceMonitorManagerImpl implements ServiceMonitorManager {
 
                                     final SubscriptionDefinition subscriptionDefinition = notificationDeliveryAgents.get(notificationDeliveryAgent);
 
-                                    if (subscriptionDefinition.getSubscribedToAll() ||
-                                            (subscriptionDefinition.getSubscribedMonitors().contains(pollResult.getMonitorClassName()))) {
+                                    if (subscriptionDefinition.getSubscriptionType() == SubscriptionDefinition.SubscriptionType.SUBSCRIBED_TO_ALL
+                                            || ((subscriptionDefinition.getSubscriptionType() == SubscriptionDefinition.SubscriptionType.SUBSCRIBED_TO_SPECIFIC)
+                                                && (subscriptionDefinition.getMonitors().contains(pollResult.getMonitorClassName())))
+                                            || ((subscriptionDefinition.getSubscriptionType() == SubscriptionDefinition.SubscriptionType.UNSUBSCRIBED_FROM_SPECIFIC)
+                                                && (!subscriptionDefinition.getMonitors().contains(pollResult.getMonitorClassName())))) {
 
                                         notificationExecutorService.submit(new Callable<Void>() {
 
