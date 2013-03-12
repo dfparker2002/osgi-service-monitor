@@ -11,6 +11,8 @@ import org.apache.felix.scr.annotations.Service;
 
 /**
  *
+ * This monitor always returns success.
+ *
  * @author CITYTECH, INC. 2013
  *
  */

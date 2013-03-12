@@ -4,6 +4,7 @@ import com.citytechinc.monitoring.constants.Constants;
 import com.citytechinc.monitoring.domain.ServiceMonitorResult;
 import com.citytechinc.monitoring.domain.SubscriptionDefinition;
 import com.citytechinc.monitoring.services.NotificationDeliveryAgent;
+import com.google.common.collect.Lists;
 import org.apache.felix.scr.annotations.Component;
 import org.apache.felix.scr.annotations.Properties;
 import org.apache.felix.scr.annotations.Property;
@@ -12,6 +13,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ *
+ * This NotificationDeliveryAgent simply logs whenever it is called.
+ *
+ * There are two ServiceMonitors in this sample package. One of then always returns "SUCCESS" while the other
+ *   (SometimesSuccessfulServiceMonitor) randomly returns "UNEXPECTED_SERVICE_RESPONSE". Unless a configuration overrides
+ *   the default, the ServiceMonitorManager defaults to requiring 3 sequential failures for any given ServiceMonitor to
+ *   trigger NotificationDeliveryAgent(s). Therefore, it might take a few rounds of poll requests for notify(...) to
+ *   be invoked.
  *
  * @author CITYTECH, INC. 2013
  *
@@ -27,11 +36,16 @@ public final class SampleNotificationDeliveryAgent implements NotificationDelive
     @Override
     public void notify(final ServiceMonitorResult serviceMonitorResult) {
 
-        LOG.debug("Received ServiceMonitorResult: '{}'", serviceMonitorResult);
+        LOG.error("Received ServiceMonitorResult: '{}'", serviceMonitorResult);
     }
 
     @Override
     public SubscriptionDefinition getSubscriptionDefinition() {
+
+        // SUBSCRIBE TO THE ALWAYS SUCCESSFUL MONITOR AND THEREFORE, BASED ON THE SAMPLE, NEVER BE TRIGGERED
+        // return SubscriptionDefinition.SPECIFIC_MONITORS(Lists.newArrayList(new String[] {"com.citytechinc.monitoring.sample.SuccessfulServiceMonitor"}));
+
+        // SUBSCRIBE TO ALL MONITORS
         return SubscriptionDefinition.ALL_MONITORS();
     }
 

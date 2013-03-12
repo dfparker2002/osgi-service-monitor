@@ -14,6 +14,8 @@ import java.util.Random;
 
 /**
  *
+ * This monitor sometimes returns SUCCESS, sometimes returns UNEXPECTED_SERVICE_RESPONSE.
+ *
  * @author CITYTECH, INC. 2013
  *
  */
