@@ -2,7 +2,7 @@
 
 [CITYTECH, Inc.](http://www.citytechinc.com)
 
-## Overview
+## Introduction
 
 The OSGi Service Monitor is a bundle aimed at aiding engineers to keep track of the (likely external) services they depend on. The OSGi Service Monitor provides:
 
@@ -12,7 +12,7 @@ The OSGi Service Monitor is a bundle aimed at aiding engineers to keep track of 
 4. A central service tasked with keeping track of monitors and delivery agents as they come and go, in addition to poll responses.
 5. A set of servlets rendering data as JSON as well as a JMX bean 
 
-## Usage
+## Overview
 
 The ServiceMonitorManager automatically tracks the monitors and delivery agents as they come on and offline. A NotificationDeliveryAgent can choose to receive unsuccessful event notifications for all registered ServiceMonitors or a list of defined monitors.
 
@@ -43,7 +43,7 @@ public interface NotificationDeliveryAgent {
     public SubscriptionDefinition getSubscriptionDefinition();
 }
 ```
-Tracked per ServiceMonitor, the ServiceMonitorManager keeps track of ServiceMonitorResponses from the monitors:
+Tracked per ServiceMonitor, the ServiceMonitorManager stores ServiceMonitorResponses from the monitors it polls. Most importantly, the manager stores details such as:
 
 1. The time the ServiceMonitor began its poll
 2. The process time for the ServiceMonitor in milliseconds
@@ -65,7 +65,15 @@ For extensibility/expansion purposes, the data received by the ServiceMonitorMan
 
 ---
 
-See the samples in com.citytechinc.monitoring.sample
+## Sample Usage
+
+There are three provided sample services - one NotificationDeliveryAgent and two ServiceMonitors.
+
+The [SampleNotificationDeliveryAgent] [1] simply logs when it is invoked. The two ServiceMonitor implementations, [SuccessfulServiceMonitor] [3] and [SometimesSuccessfulServiceMonitor] [2], return successful poll responses and random success/unexpected responses, respectively.
+
+  [1]: https://github.com/Citytechinc/osgi-service-monitor/blob/master/src/main/java/com/citytechinc/monitoring/sample/SampleNotificationDeliveryAgent.java          "SampleNotificationDeliveryAgent.java"
+  [2]: https://github.com/Citytechinc/osgi-service-monitor/blob/master/src/main/java/com/citytechinc/monitoring/sample/SometimesSuccessfulServiceMonitor.java        "SometimesSuccessfulServiceMonitor.java"
+  [3]: https://github.com/Citytechinc/osgi-service-monitor/blob/master/src/main/java/com/citytechinc/monitoring/sample/SuccessfulServiceMonitor.java                 "SuccessfulServiceMonitor.java"
 
 ## Installation
 
