@@ -16,7 +16,7 @@ The Felix OSGi Service Monitor is a bundle aimed at aiding engineers in the trac
 
 An engineer develops an OSGi service that is critical to the operation of a site. This provides a simple mechanism to monitor and alert on these services.
 
-For example, an OSGi [WeatherService](https://github.com/Citytechinc/osgi-service-monitor/blob/master/src/main/java/com/citytechinc/monitoring/sample/weatherservice/WeatherService.java) pulls forecasting and other weather data from an external system. If the `WeatherService` goes offline, receives an unexpected response, or no response at all from the external system, the product owner could receive an email/text/alert/etc... The details of how the product owner is notified are configurable by the configured instances of the notification delivery agents.
+For example, an OSGi [WeatherService](https://github.com/Citytechinc/osgi-service-monitor/blob/master/src/main/java/com/citytechinc/monitoring/sample/weatherservice/WeatherService.java) pulls forecasting and other weather data from an external system. If the [WeatherService](https://github.com/Citytechinc/osgi-service-monitor/blob/master/src/main/java/com/citytechinc/monitoring/sample/weatherservice/WeatherService.java) goes offline, receives an unexpected response, or no response at all from the external system, the [WeatherServiceMonitor](https://github.com/Citytechinc/osgi-service-monitor/blob/master/src/main/java/com/citytechinc/monitoring/sample/weatherservice/WeatherServiceMonitor.java) would indicate failures and the product owner could receive an email/text/alert/etc... The details of how the product owner is notified are configurable by the configured instances of the notification delivery agents.
 
 ## Technical Overview
 
