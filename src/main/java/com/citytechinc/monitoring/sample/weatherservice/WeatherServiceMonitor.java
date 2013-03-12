@@ -46,7 +46,7 @@ public final class WeatherServiceMonitor implements ServiceMonitor {
 
     private static final String DEFAULT_TEST_ZIP = "60606";
 
-    @Property(label = "Test Zip", value = DEFAULT_TEST_ZIP, description = "The zip code to use for forecase lookup")
+    @Property(label = "Test Zip", value = DEFAULT_TEST_ZIP, description = "The zip code to use for forecast lookup")
     private static final String TEST_ZIP_PROPERTY = "testZip";
     private String testZip;
 
