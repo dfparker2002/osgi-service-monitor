@@ -33,6 +33,9 @@
                     <source>1.6</source>
                     <target>1.6</target>
                     <encoding>utf-8</encoding>
+                    <excludes>
+                        <exclude>com/citytechinc/monitoring/sample/**</exclude>
+                    </excludes>
                 </configuration>
             </plugin>
             <plugin>
@@ -75,6 +78,9 @@
                         </goals>
                     </execution>
                 </executions>
+                <configuration>
+                    <sourceExcludes>com/citytechinc/monitoring/sample/**</sourceExcludes>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.felix</groupId>
