@@ -73,13 +73,16 @@ For extensibility/expansion purposes, the data received by the ServiceMonitorMan
 
 ## Sample Usage
 
-There are three provided sample services - one `NotificationDeliveryAgent` and two `ServiceMonitor`.
+There are three provided sample services - one `NotificationDeliveryAgent` and three `ServiceMonitor`.
 
-The [SampleNotificationDeliveryAgent] [1] simply logs when it is invoked. The two `ServiceMonitor` implementations, [SuccessfulServiceMonitor] [3] and [SometimesSuccessfulServiceMonitor] [2], return successful poll responses and random success/unexpected responses, respectively.
+The [SampleNotificationDeliveryAgent] [1] simply logs when it is invoked.
+
+There are two basic `ServiceMonitor` implementations, [SuccessfulServiceMonitor] [3] and [SometimesSuccessfulServiceMonitor] [2], return successful poll responses and random success/unexpected responses, respectively. The third sample implementation [WeatherServiceMonitor] [4] is the most in-depth and examines how you might keep tabs on other services.
 
   [1]: https://github.com/Citytechinc/osgi-service-monitor/blob/master/src/main/java/com/citytechinc/monitoring/sample/SampleNotificationDeliveryAgent.java          "SampleNotificationDeliveryAgent.java"
   [2]: https://github.com/Citytechinc/osgi-service-monitor/blob/master/src/main/java/com/citytechinc/monitoring/sample/SometimesSuccessfulServiceMonitor.java        "SometimesSuccessfulServiceMonitor.java"
   [3]: https://github.com/Citytechinc/osgi-service-monitor/blob/master/src/main/java/com/citytechinc/monitoring/sample/SuccessfulServiceMonitor.java                 "SuccessfulServiceMonitor.java"
+  [4]: https://github.com/Citytechinc/osgi-service-monitor/blob/master/src/main/java/com/citytechinc/monitoring/sample/weatherservice/WeatherServiceMonitor.java                 "WeatherServiceMonitor.java"
 
 ## Installation
 
