@@ -43,18 +43,19 @@ public interface NotificationDeliveryAgent {
     public SubscriptionDefinition getSubscriptionDefinition();
 }
 ```
-
-The ServiceMonitorManager keeps track of results from the monitors as it stores:
+Tracked per ServiceMonitor, the ServiceMonitorManager keeps track of ServiceMonitorResponses from the monitors:
 
 1. The time the ServiceMonitor began its poll
 2. The process time for the ServiceMonitor in milliseconds
 3. The exception stack trace if an exception occurred
 
-... per ServiceMonitor.
+After the max sequential unsuccesful polls is reached for a given ServiceMonitor, the relevant NotificationDeliveryAgents are notified. Polling for ServiceMonitors which are "in a state of alarm" is suspended until the alarm has been cleared.
 
-Tracked per ServiceMonitor, after the max sequential unsuccesful polls is reached, the relevant DeliveryAgents are notified. Polling for ServiceMonitors which are "in a state of alarm" is suspended until the alarm has been cleared.
+Presently, to clear an alarm an engineer must invoke the ServiceMonitorManager.resetAllAlarms() or ServiceMonitorManager.resetAlarm(String monitorName). For ease, these signatures are also available on the provided JMX MBean. The MBean also provides a quick birdseye view of the
 
-Presently, the only way to clear the alarm is to invoke resetAllAlarms() or resetAlarm(String monitorName) found on the ServiceMonitorManagerMBean.
+1. List of monitors
+2. List of delivery agents
+3. List of alarmed monitors
 
 For extensibility/expansion purposes, the data received by the ServiceMonitorManager is also available, as JSON, via GET calls to a few servlets:
 
