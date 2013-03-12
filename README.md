@@ -86,7 +86,11 @@ There are two basic `ServiceMonitor` implementations, [SuccessfulServiceMonitor]
 
 ## Installation
 
-...
+... todo ...
+
+## Todo
+
+1. Develop UI for ServiceMonitor results. Presently these are only availble as JSON via a GET call to `/bin/citytechinc/monitoring/listServiceMonitorResults`
 
 ## Notes
 
