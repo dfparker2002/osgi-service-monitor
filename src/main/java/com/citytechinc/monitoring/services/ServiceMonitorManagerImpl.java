@@ -63,10 +63,6 @@ public final class ServiceMonitorManagerImpl implements ServiceMonitorManager {
     private static final String NOTIFICATION_EXECUTOR_POOL_SIZE = "notificationExecutorPoolSize";
     private Integer notificationExecutorPoolSize;
 
-    @Property(label = "Monitor history length", intValue = Constants.SERVICE_MONITOR_MANAGER_DEFAULT_QUEUE_SIZE, description = "The number of stored monitor results at any given time.")
-    private static final String MONITOR_HISTORY_LENGTH_PROPERTY = "monitorHistoryLength";
-    private Integer monitorHistoryLength;
-
     @Property(label = "Sequential Failure Limit", intValue = Constants.SERVICE_MONITOR_MANAGER_DEFAULT_SEQUENTIAL_FAILURES_BEFORE_NOTIFICATION, description = "The number of sequential failures, tracked by individually by each ServiceMonitor, before a notification is triggered.")
     private static final String SEQUENTIAL_FAILURES_BEFORE_NOTIFICATION_PROPERTY = "sequentialFailuresBeforeNotification";
     private Integer sequentialFailuresBeforeNotification;
@@ -83,7 +79,6 @@ public final class ServiceMonitorManagerImpl implements ServiceMonitorManager {
 
         serviceMonitorExecutorPoolSize = OsgiUtil.toInteger(properties.get(SERVICE_MONITOR_EXECUTOR_POOL_SIZE), Constants.SERVICE_MONITOR_MANAGER_DEFAULT_THREAD_POOL_SIZE);
         notificationExecutorPoolSize = OsgiUtil.toInteger(properties.get(NOTIFICATION_EXECUTOR_POOL_SIZE), Constants.SERVICE_MONITOR_MANAGER_DEFAULT_THREAD_POOL_SIZE);
-        monitorHistoryLength = OsgiUtil.toInteger(properties.get(MONITOR_HISTORY_LENGTH_PROPERTY), Constants.SERVICE_MONITOR_MANAGER_DEFAULT_QUEUE_SIZE);
         sequentialFailuresBeforeNotification = OsgiUtil.toInteger(properties.get(SEQUENTIAL_FAILURES_BEFORE_NOTIFICATION_PROPERTY), Constants.SERVICE_MONITOR_MANAGER_DEFAULT_SEQUENTIAL_FAILURES_BEFORE_NOTIFICATION);
 
         if (monitorExecutorService != null) {
