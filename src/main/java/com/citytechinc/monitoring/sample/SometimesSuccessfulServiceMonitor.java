@@ -33,9 +33,9 @@ public final class SometimesSuccessfulServiceMonitor implements ServiceMonitor {
         final ServiceMonitorResponse response;
 
         if (RANDOM.nextBoolean()) {
-            response = new ServiceMonitorResponse(ServiceMonitorResponseType.SUCCESS);
+            response = ServiceMonitorResponse.SUCCESS();
         } else {
-            response = new ServiceMonitorResponse(ServiceMonitorResponseType.UNEXPECTED_SERVICE_RESPONSE);
+            response = ServiceMonitorResponse.UNEXPECTED_SERVICE_RESPONSE();
         }
 
         return response;

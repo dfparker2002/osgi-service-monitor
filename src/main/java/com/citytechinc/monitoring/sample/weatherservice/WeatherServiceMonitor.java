@@ -2,9 +2,7 @@ package com.citytechinc.monitoring.sample.weatherservice;
 
 import com.citytechinc.monitoring.constants.Constants;
 import com.citytechinc.monitoring.domain.ServiceMonitorResponse;
-import com.citytechinc.monitoring.domain.ServiceMonitorResponseType;
 import com.citytechinc.monitoring.services.ServiceMonitor;
-import org.apache.commons.lang.exception.ExceptionUtils;
 import org.apache.felix.scr.annotations.Activate;
 import org.apache.felix.scr.annotations.Component;
 import org.apache.felix.scr.annotations.Modified;
@@ -61,27 +59,27 @@ public final class WeatherServiceMonitor implements ServiceMonitor {
     public ServiceMonitorResponse poll() {
 
         // DEFAULT, HOPEFUL RESPONSE TYPE
-        ServiceMonitorResponse serviceMonitorResponse = new ServiceMonitorResponse(ServiceMonitorResponseType.SUCCESS);
+        ServiceMonitorResponse serviceMonitorResponse = ServiceMonitorResponse.SUCCESS();
 
         try {
 
             if (weatherService == null) {
 
                 // NOTICE THAT THE SERVICE_UNAVAILABLE RESPONSE IS TYPICALLY USED TO DENOTE THE SERVICE REFERENCE IS NULL
-                serviceMonitorResponse = new ServiceMonitorResponse(ServiceMonitorResponseType.SERVICE_UNAVAILABLE);
+                serviceMonitorResponse = ServiceMonitorResponse.SERVICE_UNAVAILABLE();
             } else {
 
                 // TEST ZIP CODE SHOULD NEVER RETURN NULL FORECAST. A NULL RESPONSE WOULD INDICATE A POTENTIAL PROBLEM SOMEWHERE UP THE CHAIN
                 if (weatherService.getForecastForZipCode(testZip) != null) {
 
-                    serviceMonitorResponse = new ServiceMonitorResponse(ServiceMonitorResponseType.UNEXPECTED_SERVICE_RESPONSE);
+                    serviceMonitorResponse = ServiceMonitorResponse.UNEXPECTED_SERVICE_RESPONSE();
                 }
             }
 
         } catch (final Exception exception) {
 
             // SELF EXPLANATORY EXCEPTION
-            serviceMonitorResponse = new ServiceMonitorResponse(ExceptionUtils.getStackTrace(exception));
+            serviceMonitorResponse = ServiceMonitorResponse.EXCEPTION(exception);
         }
 
         return serviceMonitorResponse;

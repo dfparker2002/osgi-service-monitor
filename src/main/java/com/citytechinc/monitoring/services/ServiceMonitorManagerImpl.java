@@ -44,18 +44,30 @@ import java.util.concurrent.TimeUnit;
  * @author CITYTECH, INC. 2013
  *
  */
-@Component(label = "Service Monitor Manager", description = "", metatype = true)
-@Service
+@Component(label = "Service Monitor Manager", description = "Responsible for maintaining references to Service Monitors and Delivery Agents, polling the monitors, maintaining records for the monitors, and triggering the delivery agents when a failure has occurred.", metatype = true)
+@Service()
 @Properties(value = {
         @Property(name = org.osgi.framework.Constants.SERVICE_VENDOR, value = Constants.CITYTECH_SERVICE_VENDOR_NAME) })
 public final class ServiceMonitorManagerImpl implements ServiceMonitorManager {
 
     private static final Logger LOG = LoggerFactory.getLogger(ServiceMonitorManagerImpl.class);
 
-    private ListeningExecutorService monitorExecutorService = MoreExecutors.listeningDecorator(Executors.newFixedThreadPool(Constants.SERVICE_MONITOR_MANAGER_DEFAULT_THREAD_POOL_SIZE));
-    private ExecutorService notificationExecutorService = MoreExecutors.listeningDecorator(Executors.newFixedThreadPool(Constants.SERVICE_MONITOR_MANAGER_DEFAULT_THREAD_POOL_SIZE));
+    private ListeningExecutorService monitorExecutorService = null;
+    private ExecutorService notificationExecutorService = null;
 
-    @Property(label = "Failures to trigger notification", value = Constants.SERVICE_MONITOR_MANAGER_DEFAULT_SEQUENTIAL_FAILURES_BEFORE_NOTIFICATION, description = "The number of sequential failures, tracked by individually by each ServiceMonitor, before a notification is triggered.")
+    @Property(label = "Service Monitor Executor Pool Size", intValue = Constants.SERVICE_MONITOR_MANAGER_DEFAULT_THREAD_POOL_SIZE, description = "The size of the thread pool used to execute service monitor poll requests.")
+    private static final String SERVICE_MONITOR_EXECUTOR_POOL_SIZE = "serviceMonitorExecutorPoolSize";
+    private Integer serviceMonitorExecutorPoolSize;
+
+    @Property(label = "Notification Executor Pool Size", intValue = Constants.SERVICE_MONITOR_MANAGER_DEFAULT_THREAD_POOL_SIZE, description = "The size of the thread pool used to execute notifications for alarmed monitors.")
+    private static final String NOTIFICATION_EXECUTOR_POOL_SIZE = "notificationExecutorPoolSize";
+    private Integer notificationExecutorPoolSize;
+
+    @Property(label = "Monitor history length", intValue = Constants.SERVICE_MONITOR_MANAGER_DEFAULT_QUEUE_SIZE, description = "The number of stored monitor results at any given time.")
+    private static final String MONITOR_HISTORY_LENGTH_PROPERTY = "monitorHistoryLength";
+    private Integer monitorHistoryLength;
+
+    @Property(label = "Sequential Failure Limit", intValue = Constants.SERVICE_MONITOR_MANAGER_DEFAULT_SEQUENTIAL_FAILURES_BEFORE_NOTIFICATION, description = "The number of sequential failures, tracked by individually by each ServiceMonitor, before a notification is triggered.")
     private static final String SEQUENTIAL_FAILURES_BEFORE_NOTIFICATION_PROPERTY = "sequentialFailuresBeforeNotification";
     private Integer sequentialFailuresBeforeNotification;
 
@@ -69,7 +81,20 @@ public final class ServiceMonitorManagerImpl implements ServiceMonitorManager {
     @Modified
     protected void activate(final Map<String, Object> properties) throws Exception {
 
-        sequentialFailuresBeforeNotification = OsgiUtil.toInteger(properties.get(SEQUENTIAL_FAILURES_BEFORE_NOTIFICATION_PROPERTY), Integer.valueOf(Constants.SERVICE_MONITOR_MANAGER_DEFAULT_SEQUENTIAL_FAILURES_BEFORE_NOTIFICATION));
+        serviceMonitorExecutorPoolSize = OsgiUtil.toInteger(properties.get(SERVICE_MONITOR_EXECUTOR_POOL_SIZE), Constants.SERVICE_MONITOR_MANAGER_DEFAULT_THREAD_POOL_SIZE);
+        notificationExecutorPoolSize = OsgiUtil.toInteger(properties.get(NOTIFICATION_EXECUTOR_POOL_SIZE), Constants.SERVICE_MONITOR_MANAGER_DEFAULT_THREAD_POOL_SIZE);
+        monitorHistoryLength = OsgiUtil.toInteger(properties.get(MONITOR_HISTORY_LENGTH_PROPERTY), Constants.SERVICE_MONITOR_MANAGER_DEFAULT_QUEUE_SIZE);
+        sequentialFailuresBeforeNotification = OsgiUtil.toInteger(properties.get(SEQUENTIAL_FAILURES_BEFORE_NOTIFICATION_PROPERTY), Constants.SERVICE_MONITOR_MANAGER_DEFAULT_SEQUENTIAL_FAILURES_BEFORE_NOTIFICATION);
+
+        if (monitorExecutorService != null) {
+            monitorExecutorService.shutdownNow();
+        }
+        monitorExecutorService = MoreExecutors.listeningDecorator(Executors.newFixedThreadPool(serviceMonitorExecutorPoolSize));
+
+        if (notificationExecutorService != null) {
+            notificationExecutorService.shutdownNow();
+        }
+        notificationExecutorService = MoreExecutors.listeningDecorator(Executors.newFixedThreadPool(notificationExecutorPoolSize));
     }
 
     @Deactivate
@@ -122,7 +147,8 @@ public final class ServiceMonitorManagerImpl implements ServiceMonitorManager {
 
                         if (serviceMonitorResponse.getServiceMonitorResponseType() == ServiceMonitorResponseType.EXCEPTION) {
 
-                            serviceMonitorResult = new ServiceMonitorResult(serviceMonitorResponse.getExceptionStackTrace(),
+                            serviceMonitorResult = new ServiceMonitorResult(serviceMonitorResponse.getServiceMonitorResponseType(),
+                                    serviceMonitorResponse.getExceptionStackTrace(),
                                     stopwatch.elapsed(TimeUnit.MILLISECONDS),
                                     callTime,
                                     serviceMonitorClassName);
@@ -149,9 +175,8 @@ public final class ServiceMonitorManagerImpl implements ServiceMonitorManager {
                         if (pollResult.getServiceMonitorResponseType() != ServiceMonitorResponseType.SUCCESS) {
 
                             recordHolder.addConcurrentFailure();
-                            recordHolder.getNumberOfConcurrentFailures();
 
-                            if (recordHolder.getNumberOfConcurrentFailures() == sequentialFailuresBeforeNotification) {
+                            if (recordHolder.getNumberOfConcurrentFailures() >= sequentialFailuresBeforeNotification) {
 
                                 for (final NotificationDeliveryAgent notificationDeliveryAgent : notificationDeliveryAgents.keySet()) {
 
@@ -258,8 +283,7 @@ public final class ServiceMonitorManagerImpl implements ServiceMonitorManager {
 
         for (final ServiceMonitorRecordHolder recordHolder : serviceMonitors.values()) {
 
-            recordHolder.clearConcurrentFailures();
-            recordHolder.clearAlarm();
+            recordHolder.clearAlarmAndConcurrentFailures();
         }
     }
 
@@ -270,8 +294,7 @@ public final class ServiceMonitorManagerImpl implements ServiceMonitorManager {
 
             if (StringUtils.equalsIgnoreCase(serviceMonitor.getClass().getName(), monitorName)) {
 
-                serviceMonitors.get(serviceMonitor).clearConcurrentFailures();
-                serviceMonitors.get(serviceMonitor).clearAlarm();
+                serviceMonitors.get(serviceMonitor).clearAlarmAndConcurrentFailures();
             }
         }
     }

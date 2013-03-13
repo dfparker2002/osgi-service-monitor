@@ -23,7 +23,7 @@ import java.util.Map;
  * @author CITYTECH, INC. 2013
  *
  */
-@Component(label = "Service Monitor Job", description = "", metatype = true)
+@Component(label = "Service Monitor Job", description = "Responsible for scheduling itself to execute the poll method on the Service Monitor Manager.", metatype = true)
 @Service
 @Properties({
     @Property(name = org.osgi.framework.Constants.SERVICE_VENDOR, value = Constants.CITYTECH_SERVICE_VENDOR_NAME) })

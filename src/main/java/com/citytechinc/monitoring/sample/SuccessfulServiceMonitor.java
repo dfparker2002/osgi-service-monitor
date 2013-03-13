@@ -25,6 +25,6 @@ public final class SuccessfulServiceMonitor implements ServiceMonitor {
     @Override
     public ServiceMonitorResponse poll() {
 
-        return new ServiceMonitorResponse(ServiceMonitorResponseType.SUCCESS);
+        return ServiceMonitorResponse.SUCCESS();
     }
 }

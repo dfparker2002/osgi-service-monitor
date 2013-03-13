@@ -1,5 +1,7 @@
 package com.citytechinc.monitoring.domain;
 
+import org.apache.commons.lang.StringUtils;
+
 import java.util.Date;
 
 /**
@@ -13,23 +15,15 @@ public final class ServiceMonitorResult extends ServiceMonitorResponse {
     private final Date callTime;
     private final String monitorClassName;
 
-    public ServiceMonitorResult(final ServiceMonitorResponseType serviceMonitorResponseType,
-                                final Long processTimeInMilliseconds,
-                                final Date callTime,
-                                final String monitorClassName) {
-
-        super(serviceMonitorResponseType);
+    public ServiceMonitorResult(ServiceMonitorResponseType serviceMonitorResponseType, Long processTimeInMilliseconds, Date callTime, String monitorClassName) {
+        super(serviceMonitorResponseType, StringUtils.EMPTY);
         this.processTimeInMilliseconds = processTimeInMilliseconds;
         this.callTime = callTime;
         this.monitorClassName = monitorClassName;
     }
 
-    public ServiceMonitorResult(final String exceptionStackTrace,
-                                final Long processTimeInMilliseconds,
-                                final Date callTime,
-                                final String monitorClassName) {
-
-        super(exceptionStackTrace);
+    public ServiceMonitorResult(ServiceMonitorResponseType serviceMonitorResponseType, String exceptionStackTrace, Long processTimeInMilliseconds, Date callTime, String monitorClassName) {
+        super(serviceMonitorResponseType, exceptionStackTrace);
         this.processTimeInMilliseconds = processTimeInMilliseconds;
         this.callTime = callTime;
         this.monitorClassName = monitorClassName;

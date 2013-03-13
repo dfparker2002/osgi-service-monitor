@@ -31,7 +31,8 @@ public final class ServiceMonitorRecordHolder extends BaseDomain {
         isInAlarmState.set(true);
     }
 
-    public void clearAlarm() {
+    public void clearAlarmAndConcurrentFailures() {
+        numberOfConcurrentFailures.set(0);
         isInAlarmState.set(false);
     }
 
