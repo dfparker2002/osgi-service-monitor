@@ -11,18 +11,43 @@
     <name>CITYTECH, Inc. OSGi Service Monitor</name>
     <description>Bundle containing a set of OSGi services useful for basic monitoring of (other) OSGi services.</description>
 
+   <organization>
+        <name>CITYTECH, Inc.</name>
+        <url>http://www.citytechinc.com</url>
+    </organization>
+
+    <developers>
+        <developer>
+            <name>Josh Durbin</name>
+            <email>jdurbin@citytechinc.com</email>
+        </developer>
+    </developers>
+
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
     <scm>
         <connection>scm:git:git@github.com:Citytechinc/osgi-service-monitor.git</connection>
         <url>https://github.com/Citytechinc/osgi-service-monitor</url>
         <developerConnection>scm:git:git@github.com:Citytechinc/osgi-service-monitor.git</developerConnection>
     </scm>
 
-    <repositories>
+    <distributionManagement>
         <repository>
-            <id>citytech-public</id>
-            <url>http://nexus.citytech.ctmsp.com/content/groups/public</url>
+            <id>citytech-releases</id>
+            <url>http://nexus.citytech.ctmsp.com/content/repositories/releases</url>
         </repository>
-    </repositories>
+        <snapshotRepository>
+            <id>citytech-snapshots</id>
+            <url>http://nexus.citytech.ctmsp.com/content/repositories/snapshots</url>
+            <uniqueVersion>false</uniqueVersion>
+        </snapshotRepository>
+    </distributionManagement>
 
     <build>
         <plugins>
