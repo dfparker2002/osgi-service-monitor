@@ -17,12 +17,19 @@
         <developerConnection>scm:git:git@github.com:Citytechinc/osgi-service-monitor.git</developerConnection>
     </scm>
 
-    <repositories>
+    <distributionManagement>
         <repository>
             <id>citytech-public</id>
-            <url>http://nexus.citytech.ctmsp.com/content/groups/public</url>
+            <name>CITYTECH Public Releases</name>
+            <url>http://nexus.citytech.ctmsp.com/content/repositories/public-releases</url>
         </repository>
-    </repositories>
+        <snapshotRepository>
+            <id>citytech-snapshots</id>
+            <name>CITYTECH Public Snapshots</name>
+            <url>http://nexus.citytech.ctmsp.com/content/repositories/public-snapshots</url>
+            <uniqueVersion>false</uniqueVersion>
+        </snapshotRepository>
+    </distributionManagement>
 
     <build>
         <plugins>
