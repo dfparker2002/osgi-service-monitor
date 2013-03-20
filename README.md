@@ -69,8 +69,6 @@ For extensibility/expansion purposes, the data received by the ServiceMonitorMan
 2. `/bin/citytechinc/monitoring/listServiceMonitorResults`
 3. `/bin/citytechinc/monitoring/listServiceMonitors`
 
----
-
 ## Sample Usage
 
 There are three provided sample services - one `NotificationDeliveryAgent` and three `ServiceMonitor`.
