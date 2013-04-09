@@ -24,7 +24,7 @@ public final class Constants {
     public static final int SERVICE_MONITOR_MANAGER_DEFAULT_THREAD_POOL_SIZE = 10;
 
     public static final String ABSTRACT_JSON_RESPONSE_SERVLET_CONTENT_TYPE = "application/json";
-    public static final String ABSTRACT_JSON_RESPONSE_SERVLET_CHARACTER_ENCODING = "utf8";
+    public static final String ABSTRACT_JSON_RESPONSE_SERVLET_CHARACTER_ENCODING = "utf-8";
     public static final String ABSTRACT_JSON_RESPONSE_SERVLET_DEFAULT_DATE_FORMAT = "MM/dd/yyyy hh:mm aaa z";
 
     private static final String SERVLET_ROOT_PATH = "/bin/citytechinc/monitoring";
