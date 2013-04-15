@@ -1,6 +1,6 @@
 package com.citytechinc.monitoring.services;
 
-import java.util.List;
+import javax.management.openmbean.TabularDataSupport;
 
 /**
  *
@@ -18,19 +18,19 @@ public interface ServiceMonitorManagerMBean {
      *
      * @return
      */
-    public List<String> getMonitors();
+    public TabularDataSupport getMonitors();
 
     /**
      *
      * @return
      */
-    public List<String> getNotificationDeliveryAgents();
+    public TabularDataSupport getNotificationDeliveryAgents();
 
     /**
      *
      * @return
      */
-    public List<String> getAlarmedMonitors();
+    public TabularDataSupport getAlarmedMonitors();
 
     /**
      *
