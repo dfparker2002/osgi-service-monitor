@@ -6,7 +6,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.citytechinc.monitoring</groupId>
     <artifactId>osgi-service-monitor</artifactId>
-    <version>0.3.2-SNAPSHOT</version>
+    <version>0.3.3-SNAPSHOT</version>
     <packaging>bundle</packaging>
     <name>CITYTECH, Inc. OSGi Service Monitor</name>
     <description>Bundle containing a set of OSGi services useful for basic monitoring of (other) OSGi services.</description>
