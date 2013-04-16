@@ -6,7 +6,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.citytechinc.monitoring</groupId>
     <artifactId>osgi-service-monitor</artifactId>
-    <version>0.3.1</version>
+    <version>0.3.2-SNAPSHOT</version>
     <packaging>bundle</packaging>
     <name>CITYTECH, Inc. OSGi Service Monitor</name>
     <description>Bundle containing a set of OSGi services useful for basic monitoring of (other) OSGi services.</description>
@@ -209,6 +209,12 @@
             <groupId>org.codehaus.jackson</groupId>
             <artifactId>jackson-mapper-asl</artifactId>
             <version>1.9.2</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.adobe.granite</groupId>
+            <artifactId>com.adobe.granite.jmx</artifactId>
+            <version>0.2.6</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
